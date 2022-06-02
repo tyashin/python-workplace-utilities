@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 checked_host = os.getenv("CHECKED_HOST")
-check_interval = os.getenv("CHECK_INTERVAL")
+check_interval = int(os.getenv("CHECK_INTERVAL"))
 notify_sound = os.getenv("NOTIFY_SOUND")
 
 pygame.mixer.init()
@@ -29,9 +29,10 @@ def check_host_is_up(host):
 
 
 if __name__ == '__main__':
-    print('script started')
+    print('Server-availability-checker script has started')
     while True:
         if not check_host_is_up(checked_host):
+            print(f'Host {checked_host} is down. Current time:{time.ctime()}')
             sound.play()
 
-        time.sleep(int(check_interval))
+        time.sleep(check_interval)
